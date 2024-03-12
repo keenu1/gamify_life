@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import defaultImage from "../../assets/img/default.png";
 import Navbar from "../../components/navbar";
 
-const Dashboard = () => {
+function Login() {
   return (
-    <div>
+    <>
       <Navbar />
       <div>ini halaman Dashboard</div>
-    </div>
+    </>
   );
-};
+}
 
-export default Dashboard;
+export default Login;

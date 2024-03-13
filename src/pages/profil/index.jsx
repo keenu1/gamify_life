@@ -8,11 +8,12 @@ import {
   ShowLoading,
   CloseLoading,
   alertPopupError,
+  alertBottom
 } from "../../assets/js/function";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import iziToast from "izitoast";
+// import iziToast from "izitoast";
 
 function Profil() {
   const [currentData, setcurrentData] = useState({
@@ -86,13 +87,9 @@ function Profil() {
             response.data.data[0].dob = currentDate();
           }
           setcurrentData(response.data.data[0]);
+          alertBottom('Updated', response.data.message);
           CloseLoading();
-          iziToast.show({
-            title: "Updated",
-            message: response.data.message,
-            color: "green",
-            timeout: 2500,
-          });
+
           // alert(response.data.message);
         }
         if (response.data.status === false) {

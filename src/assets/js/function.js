@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import iziToast from "izitoast";
 
 export const useNavigation = () => {
   const navigate = useNavigate();
@@ -82,5 +83,14 @@ export const alertPopupError = (message) => {
 
   });
 };
+
+export const alertBottom = (title, message) => {
+  iziToast.show({
+    title: title,
+    message: message,
+    color: "green",
+    timeout: 2500,
+  });
+}
 
 

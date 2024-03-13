@@ -1,10 +1,22 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 
 
 
-function Modal({ showModal, modalToggle }) {
-    // const [showModal, setShowModal] = useState(true);
+function Modal({ showModal, modalToggle, insertData }) {
+    const [currentData, setcurrentData] = useState({
+        name: "",
+    });
 
+
+    const handleInputChange = (event) => {
+        const { id, value } = event.target;
+        // console.log(id);
+        // console.log(value);
+        setcurrentData({
+            ...currentData,
+            [id]: value,
+        });
+    };
     // const modalToggle = () => {
     //     setShowModal(!showModal);
 
@@ -77,7 +89,8 @@ function Modal({ showModal, modalToggle }) {
                                                         id="name"
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                                                         placeholder="New Task"
-
+                                                        value={currentData.name}
+                                                        onChange={handleInputChange}
                                                         required
                                                     />
                                                 </div>
@@ -94,7 +107,7 @@ function Modal({ showModal, modalToggle }) {
                                     <button
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black sm:ml-3 sm:w-auto"
-                                        onClick={modalToggle}>
+                                        onClick={() => insertData(currentData.name)}>
                                         Create
                                     </button>
                                     <button
@@ -108,6 +121,7 @@ function Modal({ showModal, modalToggle }) {
                         </div>
                     </div>
                 </div>
+
             </form>
         </>
     );

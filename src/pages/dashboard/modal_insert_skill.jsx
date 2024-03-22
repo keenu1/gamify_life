@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 
-function Modal({ showModal, modalToggle, insertData }) {
+function ModalInsertSkill({ showModal, modalToggle, insertData }) {
     const [currentData, setcurrentData] = useState({
         name: "",
     });
@@ -74,7 +74,7 @@ function Modal({ showModal, modalToggle, insertData }) {
                                                 className="text-base font-semibold leading-6 text-gray-900"
                                                 id="modal-title"
                                             >
-                                                Create New Section
+                                                Create New Skill
                                             </h3>
                                             <div className="mt-2  w-full">
                                                 <div>
@@ -127,4 +127,4 @@ function Modal({ showModal, modalToggle, insertData }) {
     );
 }
 
-export default Modal;
+export default ModalInsertSkill;

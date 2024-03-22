@@ -63,7 +63,7 @@ function Login() {
       <div className="flex items-center justify-center h-screen bg-gray-200">
         <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2 text-center mb-5">Login</div>
+            <div className="font-bold text-xl  text-center mb-5">Login</div>
             <form className="w-full max-w-sm" onSubmit={signin}>
               <div className="md:flex md:items-center mb-6">
                 <div className="md:w-1/3">

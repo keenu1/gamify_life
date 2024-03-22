@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { timeout, baseUrl, useNavigation } from "../assets/js/function";
+import { timeout, baseUrl, useNavigation, alertPopupError } from "../assets/js/function";
 import axios from "axios";
 
 function Login() {
@@ -28,9 +28,16 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+          alertPopupError("Unauthorized. Please log in again.");
+
+          window.location.href = '/'; // Replace with your login page URL
+        } else {
+          alertPopupError("An error occurred. Please try again.");
+          console.log(error);
+        }
       });
+
   };
 
   const dropdownProfileToggle = () => {
@@ -48,7 +55,8 @@ function Login() {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        localStorage.setItem("token", "");
+        Cookies.set("token", "");
+
         goPage("");
       }
     });
@@ -116,11 +124,10 @@ function Login() {
           </div>
 
           <div
-            className={`absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ${
-              dropdownProfile
-                ? "transform opacity-100 scale-100 transition ease-out duration-100 "
-                : "transform opacity-0 scale-95 transition ease-in duration-75  pointer-events-none"
-            }`}
+            className={`absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ${dropdownProfile
+              ? "transform opacity-100 scale-100 transition ease-out duration-100 "
+              : "transform opacity-0 scale-95 transition ease-in duration-75  pointer-events-none"
+              }`}
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="menu-button"

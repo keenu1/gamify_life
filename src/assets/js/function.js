@@ -84,6 +84,16 @@ export const alertPopupError = (message) => {
   });
 };
 
+export const alertPopupSuccess = (message) => {
+  Swal.fire({
+    icon: "success",
+    title: "",
+    text: message,
+    timer: 2500,
+
+  });
+};
+
 export const alertBottom = (title, message) => {
   iziToast.show({
     title: title,

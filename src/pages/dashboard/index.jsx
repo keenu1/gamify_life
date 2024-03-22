@@ -2,24 +2,30 @@ import defaultImage from "../../assets/img/default.png";
 import Navbar from "../../components/navbar";
 import ModalInsert from "./modal_insert";
 import ModalUpdate from "./modal_update";
+import ModalInsertSkill from "./modal_insert_skill";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl, ShowLoading, CloseLoading, timeout, alertPopupError, alertBottom } from "../../assets/js/function";
 import Cookies from "js-cookie";
 
 function Login() {
+
+  //data section 
   const [showModal, setShowModal] = useState(true);
   const [showModalUpdate, setShowModalUpdate] = useState(true);
   const [currentData, setCurrentData] = useState([
   ]);
   const [dataForUpdate, setDataForUpdate] = useState(null);
 
-  const modalToggle = () => {
-    setShowModal(!showModal);
-  };
-  const modalToggleUpdate = () => {
-    setShowModalUpdate(!showModalUpdate);
-  };
+  // data skill
+  const [showModalSkill, setShowModalSkill] = useState(true);
+  const [showModalSkillUpdate, setShowModalSkillUpdate] = useState(true);
+  const [currentDataSkill, setCurrentDataSkill] = useState([
+  ]);
+  const [dataSkillForUpdate, setDataSkillForUpdate] = useState(null);
+
+  //load data 
   const loadData = () => {
     ShowLoading();
     const config = {
@@ -35,6 +41,7 @@ function Login() {
         if (response.data.status === true) {
 
           setCurrentData(response.data.data.data_section);
+          setCurrentDataSkill(response.data.data.data_skill)
           // console.log(response.data)
 
 
@@ -49,6 +56,15 @@ function Login() {
         console.log(error);
       });
   };
+
+  //section
+  const modalToggle = () => {
+    setShowModal(!showModal);
+  };
+  const modalToggleUpdate = () => {
+    setShowModalUpdate(!showModalUpdate);
+  };
+
   const insertData = (name) => {
     ShowLoading();
 
@@ -165,8 +181,49 @@ function Login() {
     modalToggleUpdate();
   }
 
+  //skill
+  const modalSkillToggle = () => {
+    setShowModalSkill(!showModalSkill);
+  };
+  const modalSkillToggleUpdate = () => {
+    setShowModalSkillUpdate(!showModalSkillUpdate);
+  };
+  const insertDataSkill = (name) => {
+    ShowLoading();
 
+    const formData = new FormData();
+    formData.append("name", name);
+    // Add your form data here
 
+    const config = {
+      headers: { Authorization: `Bearer ` + Cookies.get("token") },
+      timeout: timeout(),
+    };
+    const api = baseUrl() + "skill_insert";
+
+    axios
+      .post(api, formData, config)
+      .then((response) => {
+        if (response.data.status === true) {
+          // Get the newly added section object from the response
+          const newSkill = response.data.data;
+
+          // Update the currentData array by adding the new section to the beginning
+          setCurrentDataSkill(prevData => [newSkill, ...prevData]);
+
+          alertBottom('Inserted', 'data Skill inserted');
+          CloseLoading();
+        } else {
+          alertPopupError(response.data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        console.log(error);
+      });
+  };
+
+  //load
   useEffect(() => {
     loadData();
   }, []);
@@ -177,13 +234,13 @@ function Login() {
       <Navbar />
       <ModalInsert showModal={showModal} modalToggle={modalToggle} insertData={insertData}></ModalInsert>
       <ModalUpdate showModalUpdate={showModalUpdate} modalToggleUpdate={modalToggleUpdate} updateData={updateData} initialData={dataForUpdate} ></ModalUpdate>
+      <ModalInsertSkill showModal={showModalSkill} modalToggle={modalSkillToggle} insertData={insertDataSkill}></ModalInsertSkill>
       <div className="mx-5 mt-5 flex items-center justify-end">
         <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalToggle}>
           Add New Section
         </button>
       </div>
       {currentData && currentData.map((item, index) => (
-        // <div key={index}>{item}</div>
         <div className="mx-5 mt-5 p-5 shadow-lg rounded-lg" key={index}>
           <div className="flex justify-between items-center">
             <div className="mx-5 font-bold">
@@ -199,19 +256,18 @@ function Login() {
             </div>
           </div>
           <div className="mx-5 mt-5 bg-gray-50 p-5 rounded-xl grid grid-cols-4 gap-4">
-
-            <div className="p-3 bg-white rounded-xl shadow-lg">
-              <div className="font-bold mb-3">Title</div>
-              <div className="overflow-y-auto max-h-52 min-h-52">
-                <div className="bg-gray-200 rounded-xl p-3 my-1">task 1</div>
+            {currentDataSkill && currentDataSkill.map((item, index) => (
+              <div className="p-3 bg-white rounded-xl shadow-lg" key={index}>
+                <div className="font-bold mb-3">{item.name}</div>
+                <div className="overflow-y-auto max-h-52 min-h-52">
+                  <div className="bg-gray-200 rounded-xl p-3 my-1">task 1</div>
+                </div>
               </div>
-            </div>
-            {/* <div className="p-3 bg-white rounded-xl shadow-lg">
-          <div className="font-bold mb-3">Title</div>
-          <div className="overflow-y-auto max-h-52 min-h-52">
-            <div className="bg-gray-200 rounded-xl p-3 my-1">task 1</div>
-          </div>
-        </div> */}
+
+            ))}
+            <div> <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalSkillToggle}>
+              Add New Skill
+            </button></div>
           </div>
         </div>
       ))}

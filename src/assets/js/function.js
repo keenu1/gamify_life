@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import iziToast from "izitoast";
+import Cookies from "js-cookie";
 
 export const useNavigation = () => {
   const navigate = useNavigate();
@@ -16,6 +17,36 @@ export const baseUrl = () => {
 
   return url;
 };
+
+export const catchErrorConnection = (error) => {
+
+  if (error.code === "ECONNABORTED") {
+    alertPopupError(
+      "Unstable Connection"
+    );
+  } else if (error.code === "ERR_NETWORK") {
+    alertPopupError(
+      "Unstable Connection"
+    )
+  } else if (error.code === "ERR_BAD_REQUEST") {
+    if (error.response?.request?.status === 401) {
+      Cookies.set("token", "");
+      CloseLoading();
+      window.location.href = '/';
+    }
+  } else {
+    AlertPopup("error", "", "Mohon maaf terjadi kesalahan", 1500, false);
+  }
+
+
+  // if (error.response && error.response.status === 401) {
+  //   alertPopupError("Unauthorized. Please log in again.");
+
+  // } else {
+  //   alertPopupError("An error occurred. Please try again.");
+  //   console.log(error);
+  // }
+}
 
 export const timeout = () => {
   const timeout = 30000;

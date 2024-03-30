@@ -3,6 +3,7 @@ import {
   useNavigation,
   baseUrl,
   alertPopupError,
+  catchErrorConnection,
 } from "../../assets/js/function";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -51,77 +52,79 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
-        console.log(error);
+        catchErrorConnection(error)
       });
 
     // GoPage("home");
   };
 
+  //styeling 
+  const backgroundStyle = {
+    backgroundImage: 'url("/src/assets/img/banner.avif")',
+    backgroundSize: 'contain',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+
+    // Adjust as needed
+  };
+
   return (
     <>
-      <div className="flex items-center justify-center h-screen bg-gray-200">
-        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl  text-center mb-5">Login</div>
-            <form className="w-full max-w-sm" onSubmit={signin}>
-              <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                  <label
-                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                    htmlFor="inline-full-name"
-                  >
-                    Full Name
-                  </label>
-                </div>
-                <div className="md:w-2/3">
-                  <input
-                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                    id="username"
-                    value={myObject.username}
-                    onChange={handleInputChange}
-                    type="text"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                  <label
-                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                    htmlFor="inline-password"
-                  >
-                    Password
-                  </label>
-                </div>
-                <div className="md:w-2/3">
-                  <input
-                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                    id="password"
-                    type="password"
-                    placeholder=""
-                    value={myObject.password}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+      <div className=" h-screen bg-black p-10 ">
+        <div className=" bg-white h-full rounded-xl  flex items-center justify-center shadow-md shadow-white">
+          <div className=" h-full w-full sm:w-1/2 text-center flex flex-col ">
+
+
+            <div className="h-full flex flex-col items-center justify-center gap-10 px-10 sm:px-10 md:px-15 lg:px-32">
+              <div>
+                <div className="text-xl font-bold">LOGIN</div>
+                <div className="text-xs">Enter your username and password </div>
               </div>
 
-              <div className=" items-center">
-                <div className="text-center ">
-                  <button
-                    className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
-                    type="submit"
-                  >
-                    Sign Up
+              <form className="w-full flex flex-col gap-5" onSubmit={signin}>
+                <div className="flex flex-col gap-2">
+                  <div className="relative">
+                    <input
+                      className="rounded-lg pl-10 pr-4 appearance-none border-1 border-gray-200 w-full py-2 px-4 text-gray-700 leading-tight focus:ring-0 focus:outline-none focus:bg-white focus:border-x focus:border-y focus:border-black transition duration-300"
+                      id="username"
+                      value={myObject.username}
+                      onChange={handleInputChange}
+                      type="text"
+                      placeholder="username"
+                      required
+                    />
+                    <i className="bx bx-user absolute top-0 left-0 mt-3 ml-3 text-gray-500"></i>
+                  </div>
+                  <div className="relative">
+                    <input
+                      className="pl-10 pr-4 rounded-lg appearance-none border-1 border-gray-200  w-full py-2 px-4 text-gray-700 leading-tight focus:ring-0  focus:outline-none focus:bg-white focus:border-x focus:border-y  focus:border-black transition duration-300"
+                      id="password"
+                      type="password"
+                      placeholder="password"
+                      value={myObject.password}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <i className="bx bx-key absolute top-0 left-0 mt-3 ml-3 text-gray-500"></i>
+                  </div>
+                </div>
+
+                <div>
+                  <button className="shadow bg-black hover:bg-slate-700 focus:shadow-outline focus:outline-none text-white font-bold py-4 px-6 rounded-2xl w-auto hover:shadow-lg transition duration-300">
+                    Login
                   </button>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
+
+
           </div>
-          <div className="px-6 pt-4 pb-2"></div>
+
+          <div className=" h-full  sm:w-1/2 hidden sm:block" style={backgroundStyle}>
+
+          </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }

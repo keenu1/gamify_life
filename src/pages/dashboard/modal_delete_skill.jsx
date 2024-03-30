@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 
 
-function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
+function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
     const [currentData, setcurrentData] = useState({
         name: "",
     });
@@ -87,32 +87,9 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                                 className="text-base font-semibold leading-6 text-gray-900"
                                                 id="modal-title"
                                             >
-                                                Create New Skill on {currentDataSection.name}
+                                                Delete this data ?
                                             </h3>
-                                            <div className="mt-2  w-full">
-                                                <div>
-                                                    {/* <label
-                                                        htmlFor="first_name"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                                    >
-                                                        Name
-                                                    </label> */}
-                                                    <input
-                                                        type="text"
-                                                        id="name"
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-                                                        placeholder="New Task"
-                                                        value={currentData.name}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                    />
-                                                </div>
-                                                {/* <p className="text-sm text-gray-500">
-                                                Are you sure you want to deactivate your account? All of
-                                                your data will be permanently removed. This action
-                                                cannot be undone.
-                                            </p> */}
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -120,8 +97,8 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                     <button
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black sm:ml-3 sm:w-auto"
-                                        onClick={() => insertData(currentDataSection.id, currentData.name)}>
-                                        Create
+                                        onClick={() => deleteData(currentDataSection.id_section, currentDataSection.id)}>
+                                        Yes
                                     </button>
                                     <button
                                         type="button"

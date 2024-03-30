@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { timeout, baseUrl, useNavigation, alertPopupError } from "../assets/js/function";
+import { timeout, baseUrl, useNavigation, alertPopupError, catchErrorConnection } from "../assets/js/function";
 import axios from "axios";
 
 function Login() {
@@ -28,14 +28,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          alertPopupError("Unauthorized. Please log in again.");
-
-          window.location.href = '/'; // Replace with your login page URL
-        } else {
-          alertPopupError("An error occurred. Please try again.");
-          console.log(error);
-        }
+        catchErrorConnection(error);
       });
 
   };

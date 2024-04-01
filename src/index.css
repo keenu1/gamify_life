@@ -21,3 +21,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.transition-slide {
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+
+.text-hidden {
+  font-size: 0px !important;
+  display: none;
+}

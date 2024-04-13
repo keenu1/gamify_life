@@ -20,15 +20,14 @@ function Modal({ showModal, modalToggle, insertData }) {
     // const modalToggle = () => {
     //     setShowModal(!showModal);
 
-    // };
-
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        insertData(currentData.name);
+    };
 
     return (
         <>
-
-            {/* <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalToggle}>hello</button> */}
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div
                     className={`relative z-10 ${showModal
                         ? "ease-out opacity-0 duration-200 pointer-events-none "
@@ -105,9 +104,9 @@ function Modal({ showModal, modalToggle, insertData }) {
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button
-                                        type="button"
+                                        type="submit"
                                         className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black sm:ml-3 sm:w-auto"
-                                        onClick={() => insertData(currentData.name)}>
+                                    >
                                         Create
                                     </button>
                                     <button
@@ -128,3 +127,4 @@ function Modal({ showModal, modalToggle, insertData }) {
 }
 
 export default Modal;
+

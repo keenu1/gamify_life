@@ -138,32 +138,57 @@ function Login() {
               <i className='bx bx-chevron-right mt-1' onClick={showMenuToggle}></i>
             </div>
 
-            <div className={`flex flex-col gap-2 ${showMenu ? "w-full" : ""}`}>
+            <div className={`flex flex-col gap-2  ${showMenu ? "w-full" : ""}`} onMouseLeave={(e) => {
+              e.target.style.transitionDelay = '0s';
+            }}
+              onMouseEnter={(e) => {
+                e.target.style.transitionDelay = '0s';
+              }}>
               <Link
                 to="/home"
-                className={`${isActive("/home") ? "bg-gray-100 text-black font-medium " : "text-gray-500 hover:font-medium hover:text-black "
+                className={`${isActive("/home") ? "bg-gray-100 text-black font-medium " : "text-gray-500 hover:font-medium hover:text-black  "
                   } relative flex items-center rounded-lg px-3 py-2`}
               >
                 <i className='bx bx-home-circle '></i>
 
-                <span className={`ms-6 flex-none absolute   transition-all  ${showMenu ? "opacity-100 transform translate-x-0 duration-200 delay-300" : "opacity-0 translate-x-[-20px] duration-0 "}`}> Home</span>
+                <span className={`ms-6 flex-none absolute   transition-all  ${showMenu ? "opacity-100 transform translate-x-0 duration-200  " : "opacity-0 translate-x-[-20px] duration-0 "}`}
+                  onMouseLeave={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                > Home</span>
               </Link>
               <Link
                 to="/dashboard"
-                className={`${isActive("/dashboard") ? "bg-gray-100 text-black font-medium" : "text-gray-500 hover:font-medium hover:text-black"
+                className={`group ${isActive("/dashboard") ? "bg-gray-100 text-black font-medium" : "text-gray-500 hover:font-medium hover:text-black"
                   } flex items-center rounded-lg px-3 py-2`}
               >
-                <i className='bx bxs-dashboard' ></i>
-                <span className={`ms-6 flex-none absolute   transition-all  ${showMenu ? "opacity-100 transform translate-x-0 duration-200 delay-500" : "opacity-0 translate-x-[-20px] duration-0 "}`}> Dashboard</span>
+                <i className='bx bxs-dashboard'></i>
+                <span className={`ms-6 flex-none absolute transition-all duration-200 ${showMenu ? "opacity-100 transform translate-x-0 delay-500" : "opacity-0 translate-x-[-20px]"} group-hover:delay-0`}
+                  onMouseLeave={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                > Dashboard</span>
               </Link>
               <Link
                 to="/news"
-                className={`${isActive("/News") ? "bg-gray-100 text-black font-medium" : "text-gray-500 hover:font-medium hover:text-black"
+                className={`group ${isActive("/news") ? "bg-gray-100 text-black font-medium" : "text-gray-500 hover:font-medium hover:text-black"
                   } flex items-center rounded-lg px-3 py-2`}
               >
-                <i className='bx bxs-news' ></i>
-                <span className={`ms-6 flex-none absolute   transition-all  ${showMenu ? "opacity-100 transform translate-x-0 duration-200 delay-700" : "opacity-0 translate-x-[-20px] duration-0 "}`}> News </span>
-
+                <i className='bx bxs-news'></i>
+                <span className={`ms-6 flex-none absolute transition-all duration-200 ${showMenu ? "opacity-100 transform translate-x-0 delay-700" : "opacity-0 translate-x-[-20px]"} group-hover:delay-0`}
+                  onMouseLeave={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                > News</span>
               </Link>
             </div>
 

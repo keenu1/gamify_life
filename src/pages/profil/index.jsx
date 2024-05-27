@@ -17,7 +17,7 @@ import axios from "axios";
 // import iziToast from "izitoast";
 
 function Profil() {
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(JSON.parse(localStorage.getItem('showMenu')));
   const [open, setOpen] = useState(false)
 
   const cancelButtonRef = useRef(null)
@@ -53,7 +53,6 @@ function Profil() {
     axios
       .post(api, "", config)
       .then((response) => {
-        console.log(response.data.data);
         if (response.data.status === true) {
           const newData = { ...response.data.data[0] }; // Create a new object
           if (newData.dob === "0000-00-00") {
@@ -86,7 +85,8 @@ function Profil() {
     var input = document.getElementById('file_input');
 
     // Check if a file is selected
-    if (input.files && input.files[0]) {
+
+    if (input != null && input.files && input.files[0]) {
       var file = input.files[0]; // Get the file object
       formData.append('image', file); // A
     }
@@ -107,7 +107,6 @@ function Profil() {
           }
           setcurrentData(response.data.data[0]);
           alertBottom('Updated', response.data.message);
-          console.log(response.data);
           CloseLoading();
 
           // alert(response.data.message);
@@ -272,10 +271,8 @@ function Profil() {
                           </Dialog.Title>
                           <div className="mt-2  ">
                             {/* <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> */}
-                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-
-
+                            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
                           </div>
                         </div>
                       </div>

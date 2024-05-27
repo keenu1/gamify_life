@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 
 
 
-function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
+function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
     const [currentData, setcurrentData] = useState({
         name: "",
+        score: "",
+        id_skill: "",
     });
     const [currentDataSection, setcurrentDataSection] = useState({
         name: "",
@@ -40,7 +42,7 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
         <>
 
             {/* <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalToggle}>hello</button> */}
-            <form onSubmit={(event) => { event.preventDefault(); deleteData(currentDataSection.id_section, currentDataSection.id) }}>
+            <form onSubmit={(event) => { event.preventDefault(); insertData(currentDataSection.id_section, currentDataSection.id, currentData) }}>
                 <div
                     className={`relative z-10 ${showModal
                         ? "ease-out opacity-0 duration-200 pointer-events-none "
@@ -86,9 +88,48 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
                                                 className="text-base font-semibold leading-6 text-gray-900"
                                                 id="modal-title"
                                             >
-                                                Delete this data ?
+                                                Create New Task on {currentDataSection.name}
                                             </h3>
+                                            <div className="mt-2  w-full">
+                                                <div>
+                                                    <label
+                                                        htmlFor="name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                    >
+                                                        Name
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="name"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                                                        placeholder="New Task"
+                                                        value={currentData.name}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                </div>
 
+                                            </div>
+                                            <div className="mt-2  w-full">
+                                                <div>
+                                                    <label
+                                                        htmlFor="score"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                    >
+                                                        Score
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        id="score"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                                                        placeholder="0"
+                                                        value={currentData.score}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +138,7 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
                                         type="submit"
                                         className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black sm:ml-3 sm:w-auto"
                                     >
-                                        Yes
+                                        Create
                                     </button>
                                     <button
                                         type="button"

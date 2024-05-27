@@ -35,7 +35,9 @@ export const catchErrorConnection = (error) => {
       window.location.href = '/';
     }
   } else {
-    AlertPopup("error", "", "Mohon maaf terjadi kesalahan", 1500, false);
+    alertPopupError(
+      "Mohon maaf terjadi kesalahan"
+    )
   }
 
 

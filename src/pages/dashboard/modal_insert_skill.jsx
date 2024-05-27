@@ -5,18 +5,22 @@ import React, { useState, useEffect } from "react";
 function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
     const [currentData, setcurrentData] = useState({
         name: "",
+        level: "",
+        progress: "",
+        limit_progress: "",
     });
     const [currentDataSection, setcurrentDataSection] = useState({
         name: "",
     });
 
     useEffect(() => {
-        console.log(showModal);
+
         if (!showModal && initialData) {
             setcurrentDataSection(initialData);
         } else {
             setcurrentDataSection({});
         }
+
     }, [showModal, initialData]);
 
 
@@ -41,7 +45,7 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
         <>
 
             {/* <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalToggle}>hello</button> */}
-            <form onSubmit={() => insertData(currentDataSection.id, currentData.name)}>
+            <form onSubmit={(event) => { event.preventDefault(); insertData(currentDataSection.id, currentData); }}>
                 <div
                     className={`relative z-10 ${showModal
                         ? "ease-out opacity-0 duration-200 pointer-events-none "
@@ -91,12 +95,12 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                             </h3>
                                             <div className="mt-2  w-full">
                                                 <div>
-                                                    {/* <label
+                                                    <label
                                                         htmlFor="first_name"
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
                                                         Name
-                                                    </label> */}
+                                                    </label>
                                                     <input
                                                         type="text"
                                                         id="name"
@@ -107,11 +111,67 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                                         required
                                                     />
                                                 </div>
-                                                {/* <p className="text-sm text-gray-500">
-                                                Are you sure you want to deactivate your account? All of
-                                                your data will be permanently removed. This action
-                                                cannot be undone.
-                                            </p> */}
+
+                                            </div>
+                                            <div className="mt-2  w-full">
+                                                <div>
+                                                    <label
+                                                        htmlFor="first_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                    >
+                                                        Level
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        id="level"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                                                        placeholder="0"
+                                                        value={currentData.level}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                </div>
+
+                                            </div>
+                                            <div className="mt-2  w-full">
+                                                <div>
+                                                    <label
+                                                        htmlFor="first_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                    >
+                                                        Progress
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        id="progress"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                                                        placeholder="0"
+                                                        value={currentData.progress}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                </div>
+
+                                            </div>
+                                            <div className="mt-2  w-full">
+                                                <div>
+                                                    <label
+                                                        htmlFor="first_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                    >
+                                                        Limit Progress
+                                                    </label>
+                                                    <input
+                                                        type="number"
+                                                        id="limit_progress"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                                                        placeholder="0"
+                                                        value={currentData.limit_progress}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

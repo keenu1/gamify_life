@@ -35,7 +35,7 @@ function Modal({ showModalUpdate, modalToggleUpdate, updateData, initialData }) 
                                         </div>
                                         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left  w-full">
                                             <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">
-                                                Update skill
+                                                Update Task
                                             </h3>
                                             <div className="mt-2 w-full">
                                                 <div>
@@ -57,62 +57,21 @@ function Modal({ showModalUpdate, modalToggleUpdate, updateData, initialData }) 
                                                     />
                                                 </div>
                                             </div>
-
                                             <div className="mt-2 w-full">
                                                 <div>
                                                     <label
-                                                        htmlFor="level"
+                                                        htmlFor="score"
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
-                                                        Level
+                                                        Score
                                                     </label>
                                                     <input
                                                         type="number"
-                                                        id="level"
-                                                        name="level"
+                                                        id="score"
+                                                        name="score"
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                                                         placeholder="New Task"
-                                                        value={currentData.level || ''}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 w-full">
-                                                <div>
-                                                    <label
-                                                        htmlFor="progress"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                                    >
-                                                        Progress
-                                                    </label>
-                                                    <input
-                                                        type="number"
-                                                        id="progress"
-                                                        name="progress"
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-                                                        placeholder="New Task"
-                                                        value={currentData.progress || ''}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 w-full">
-                                                <div>
-                                                    <label
-                                                        htmlFor="limit_progress"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                                    >
-                                                        Limit Progress
-                                                    </label>
-                                                    <input
-                                                        type="number"
-                                                        id="limit_progress"
-                                                        name="limit_progress"
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-                                                        placeholder="New Task"
-                                                        value={currentData.limit_progress || ''}
+                                                        value={currentData.score || ''}
                                                         onChange={handleInputChange}
                                                         required
                                                     />

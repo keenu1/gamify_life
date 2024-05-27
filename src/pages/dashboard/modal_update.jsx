@@ -5,7 +5,6 @@ function Modal({ showModalUpdate, modalToggleUpdate, updateData, initialData }) 
 
     // Reset currentData whenever showModalUpdate changes
     useEffect(() => {
-        console.log(showModalUpdate);
         if (!showModalUpdate && initialData) {
             setCurrentData(initialData);
         } else {
@@ -23,7 +22,10 @@ function Modal({ showModalUpdate, modalToggleUpdate, updateData, initialData }) 
 
     return (
         <>
-            <form onSubmit={() => updateData(currentData)}>
+            <form onSubmit={(event) => {
+                event.preventDefault();
+                updateData(currentData);
+            }}>
                 <div className={`relative z-10 ${showModalUpdate ? "ease-out opacity-0 duration-200 pointer-events-none " : "ease-in opacity-100 duration-300"}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -73,7 +75,7 @@ function Modal({ showModalUpdate, modalToggleUpdate, updateData, initialData }) 
                         </div>
                     </div>
                 </div>
-            </form>
+            </form >
         </>
     );
 }

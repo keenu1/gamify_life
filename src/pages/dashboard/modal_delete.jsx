@@ -1,48 +1,33 @@
 import React, { useState, useEffect } from "react";
 
+function Modal({ showModalDelete, modalToggleDelete, deleteData, initialData }) {
+    const [currentData, setCurrentData] = useState({});
 
-
-function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
-    const [currentData, setcurrentData] = useState({
-        name: "",
-    });
-    const [currentDataSection, setcurrentDataSection] = useState({
-        name: "",
-    });
-
+    // Reset currentData whenever showModalDelete changes
     useEffect(() => {
-        if (!showModal && initialData) {
-            setcurrentDataSection(initialData);
+        if (!showModalDelete && initialData) {
+            setCurrentData(initialData);
         } else {
-            setcurrentDataSection({});
+            setCurrentData({});
         }
-    }, [showModal, initialData]);
-
-
+    }, [showModalDelete, initialData]);
 
     const handleInputChange = (event) => {
-        const { id, value } = event.target;
-        // console.log(id);
-        // console.log(value);
-        setcurrentData({
-            ...currentData,
-            [id]: value,
-        });
+        const { name, value } = event.target;
+        setCurrentData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
     };
-    // const modalToggle = () => {
-    //     setShowModal(!showModal);
-
-    // };
-
-
 
     return (
         <>
-
-            {/* <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalToggle}>hello</button> */}
-            <form onSubmit={(event) => { event.preventDefault(); deleteData(currentDataSection.id_section, currentDataSection.id) }}>
+            <form onSubmit={(event) => {
+                event.preventDefault();
+                deleteData(currentData);
+            }}>
                 <div
-                    className={`relative z-10 ${showModal
+                    className={`relative z-10 ${showModalDelete
                         ? "ease-out opacity-0 duration-200 pointer-events-none "
                         : "ease-in opacity-100 duration-300"
                         }`}
@@ -72,7 +57,7 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
             From: "opacity-100 translate-y-0 sm:scale-100"
           To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" */}
 
-                            <div className={`relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg ${showModal
+                            <div className={`relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg ${showModalDelete
                                 ? "ease-in duration-200 opacity-0 translate-y-0 sm:translate-y-0 sm:scale-95"
                                 : "ease-out duration-300 opacity-100 translate-y-4 sm:scale-100"
                                 }`}>
@@ -102,7 +87,7 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
                                     <button
                                         type="button"
                                         className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                                        onClick={modalToggle}>
+                                        onClick={modalToggleDelete}>
                                         Cancel
                                     </button>
                                 </div>
@@ -111,9 +96,9 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
                     </div>
                 </div>
 
-            </form>
+            </form >
         </>
     );
 }
 
-export default ModalInsertSkill;
+export default Modal;

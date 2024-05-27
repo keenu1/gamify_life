@@ -11,6 +11,7 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
     });
 
     useEffect(() => {
+
         if (!showModal && initialData) {
             setcurrentDataSection(initialData);
         } else {
@@ -40,7 +41,7 @@ function ModalInsertSkill({ showModal, modalToggle, deleteData, initialData }) {
         <>
 
             {/* <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded" onClick={modalToggle}>hello</button> */}
-            <form onSubmit={(event) => { event.preventDefault(); deleteData(currentDataSection.id_section, currentDataSection.id) }}>
+            <form onSubmit={(event) => { event.preventDefault(); deleteData(currentDataSection) }}>
                 <div
                     className={`relative z-10 ${showModal
                         ? "ease-out opacity-0 duration-200 pointer-events-none "

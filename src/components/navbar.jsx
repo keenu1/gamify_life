@@ -9,9 +9,17 @@ function Login() {
   const [nama, setNama] = useState("");
 
   const [dropdownProfile, setDropdownProfile] = useState(false);
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(JSON.parse(localStorage.getItem('showMenu')));
   const goPage = useNavigation();
   const location = useLocation();
+
+  const [profile, setProfile] = useState({
+    backgroundImage: 'url("/src/assets/img/default.png")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  });
+
 
   const isActive = (pathname) => {
     return location.pathname === pathname;
@@ -30,7 +38,10 @@ function Login() {
       .then((response) => {
         if (response.data.status === true) {
           setNama(response.data.data[0].name);
-
+          setProfile((prevProfile) => ({
+            ...prevProfile,
+            backgroundImage: `url(${response.data.data[0].image})`,
+          }));
         }
         if (response.data.status === false) {
           alert(response.data.message);
@@ -94,19 +105,17 @@ function Login() {
     loadUserData();
 
     document.addEventListener("mousedown", handleClickOutside);
+    // setShowMenu(JSON.parse(localStorage.getItem('showMenu')))
+
+
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+
+
   }, []); //
 
-  const Profile = {
-    backgroundImage: 'url("/src/assets/img/default.png")',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    // Adjust as needed
-  };
 
 
 
@@ -195,7 +204,7 @@ function Login() {
           </div>
           <div className="p-3 w-full relative ">
             <div className="w-full  flex justify-center items-center gap-2">
-              <div className="w-8 h-8 rounded-lg  " style={Profile}>
+              <div className="w-8 h-8 rounded-lg  " style={profile}>
 
               </div>
               <div className={`grow ${showMenu ? "" : "hidden"}`}>
@@ -323,7 +332,7 @@ function Login() {
           </div>
           <div className="p-3 ">
             <div className=" flex  justify-end items-center gap-2">
-              <div className="w-8 h-8 rounded-lg " style={Profile} id="menu-profile" onClick={dropdownProfileToggle}>
+              <div className="w-8 h-8 rounded-lg " style={profile} id="menu-profile" onClick={dropdownProfileToggle}>
 
               </div>
               {/* <div className={`grow ${showMenu ? "" : "hidden"}`}>

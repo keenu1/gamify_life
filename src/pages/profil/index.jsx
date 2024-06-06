@@ -10,7 +10,7 @@ import {
   alertPopupError,
   alertBottom
 } from "../../assets/js/function";
-import { useEffect, useState, Fragment, useRef } from "react";
+import { useEffect, useState, Fragment, useRef, catchErrorConnection } from "react";
 import { Dialog, Transition } from '@headlessui/react'
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -27,6 +27,7 @@ function Profil() {
     gender: "",
     dob: "",
     image: "",
+    job: "",
   });
   const goPage = useNavigation();
 
@@ -66,7 +67,7 @@ function Profil() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
 
@@ -90,6 +91,9 @@ function Profil() {
       var file = input.files[0]; // Get the file object
       formData.append('image', file); // A
     }
+    console.log(Object.fromEntries(formData));
+
+
 
     const config = {
       headers: { Authorization: `Bearer ` + Cookies.get("token") },
@@ -116,7 +120,7 @@ function Profil() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -150,8 +154,8 @@ function Profil() {
               <div className="flex justify-center ">
                 <div className="  w-32 h-32  relative" >
                   <div className=" object-cover rounded-full w-full h-full " style={Profile}>
-
                   </div>
+
 
                   {/* <img
                     src={defaultImage}
@@ -163,19 +167,20 @@ function Profil() {
                   </div>
                 </div>
 
+
               </div>
               <div>
                 <label
                   htmlFor="first_name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Name
                 </label>
                 <input
                   type="text"
                   id="name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="John"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                  placeholder="your name "
                   value={currentData.name}
                   onChange={handleInputChange}
                   required
@@ -183,14 +188,31 @@ function Profil() {
               </div>
               <div>
                 <label
+                  htmlFor="first_name"
+                  className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Job
+                </label>
+                <input
+                  type="text"
+                  id="job"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                  placeholder="Your tittle"
+                  value={currentData.job}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label
                   htmlFor="gender"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Select Gender
                 </label>
                 <select
                   id="gender"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                   value={currentData.gender}
                   onChange={handleInputChange}
                 >
@@ -202,14 +224,14 @@ function Profil() {
               <div>
                 <label
                   htmlFor="dob"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Date Of Birthday
                 </label>
                 <input
                   type="date"
                   id="dob"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                   value={currentData.dob}
                   onChange={handleInputChange}
                   required
@@ -251,7 +273,7 @@ function Profil() {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -270,8 +292,8 @@ function Profil() {
                             Update your Image
                           </Dialog.Title>
                           <div className="mt-2  ">
-                            {/* <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> */}
-                            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
+                            {/* <label class="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> */}
+                            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" accept="image/*" />
                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
                           </div>
                         </div>

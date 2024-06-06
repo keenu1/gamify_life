@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { baseUrl, ShowLoading, CloseLoading, timeout, alertPopupError, alertBottom } from "../../assets/js/function";
+import { baseUrl, ShowLoading, CloseLoading, timeout, alertPopupError, alertBottom, catchErrorConnection } from "../../assets/js/function";
 import Cookies from "js-cookie";
 
 
@@ -30,9 +30,14 @@ function Home() {
       .post(api, "", config)
       .then((response) => {
         if (response.data.status === true) {
-          setCurrentData(response.data.data);
-
+          console.log(response.data);
           setCurrentDataProfile(response.data.data_profile);
+          if (response.data.data != undefined) {
+            setCurrentData(response.data.data);
+
+
+          }
+
 
           CloseLoading();
         }
@@ -41,8 +46,8 @@ function Home() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
-        console.log(error);
+        catchErrorConnection(error);
+
       });
   };
 
@@ -62,19 +67,28 @@ function Home() {
       <Navbar />
       <div className={`flex transition-all ease-in-out duration-500   ${showMenu ? "md:gap-11 lg:gap-2" : "md:gap-4 lg:gap-2"} `}>
         <div className={`  transition-all ease-in-out duration-500 ${showMenu ? "w-0 md:w-1/5" : "w-0 md:w-16"}`} ></div>
-        <div className={` transition-all ease-in-out duration-500 grow  min-h-screen  max-h-screen border p-5 rounded-xl shadow-lg mx-2  ${showMenu ? " " : ""}`}>
+        <div className={` transition-all ease-in-out duration-500 grow min-h-screen  border p-0 lg:p-5 rounded-xl shadow-lg mx-2 mt-2 lg:mt-0  ${showMenu ? " " : ""}`}>
           <div className=" flex  justify-center items-center ">
-            <div className="overflow-hidden rounded-full w-32 h-32 ">
+            <div className="overflow-hidden rounded-full w-32 h-32 mt-5">
               <img
                 src={`${currentDataProfile.image}`}
                 alt=""
                 className="object-cover w-full h-full"
               />
             </div>
+            <div className="ms-5 ">
+              <div className="font-bold">
+                {currentDataProfile.name}
+              </div>
+              <div>
+                {currentDataProfile.job}
+              </div>
+            </div>
+
           </div>
           <div className=" w-full  grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 ">
             {currentData && currentData.map((item, index) => (
-              <div className="p-3">
+              <div className={`p-3 ${index == currentData.length - 1 ? "pb-20" : ""}`}>
                 <div className="font-bold mb-3">{item.name}</div>
                 <div>
                   {item.skill && item.skill.map((item2, index2) => (
@@ -88,9 +102,8 @@ function Home() {
                           lvl. {item2.level}
                         </div>
                       </div>
-                      <div className="relative  h-3">
-                        <div className="bg-gray-500 h-3 rounded-full test absolute top-0 left-0" style={{ width: `${item2.persentase}%` }}> </div>
-                        <div className="bg-gray-300 w-100 h-3 rounded-full "></div>
+                      <div className=" h-3 bg-gray-300 rounded-full">
+                        <div className="bg-gray-500 h-3 rounded-full" style={{ width: `${item2.persentase}%` }}></div>
                       </div>
                     </div>
                   ))}

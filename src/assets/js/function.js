@@ -13,7 +13,14 @@ export const useNavigation = () => {
 };
 
 export const baseUrl = () => {
-  const url = "http://localhost/apigamifylife/";
+  let url = "";
+
+  if (process.env.NODE_ENV === 'production') {
+    url = "https://gamifylife.online/gamify_life_api/";
+  } else {
+    // url = "http://localhost/apigamifylife/";
+    url = "https://gamifylife.online/gamify_life_api/";
+  }
 
   return url;
 };

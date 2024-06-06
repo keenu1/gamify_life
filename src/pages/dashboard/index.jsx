@@ -12,7 +12,7 @@ import ModalUpdateTask from "./modal_update_task";
 
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { baseUrl, ShowLoading, CloseLoading, timeout, alertPopupError, alertBottom } from "../../assets/js/function";
+import { baseUrl, ShowLoading, CloseLoading, timeout, alertPopupError, alertBottom, catchErrorConnection } from "../../assets/js/function";
 import Cookies from "js-cookie";
 
 function Login() {
@@ -48,6 +48,7 @@ function Login() {
   const [dataTaskForUpdate, setDataTaskForUpdate] = useState(null);
   const [dataTaskForInsert, setDataTaskForInsert] = useState(null);
 
+  const isMobile = window.innerWidth <= 768;
   //load data 
   const loadData = () => {
     ShowLoading();
@@ -62,7 +63,9 @@ function Login() {
       .post(api, "", config)
       .then((response) => {
         if (response.data.status === true) {
-          setCurrentData(response.data.data.data_section);
+          if (response.data.data != undefined) {
+            setCurrentData(response.data.data.data_section);
+          }
           CloseLoading();
         }
         if (response.data.status === false) {
@@ -70,8 +73,8 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
-        console.log(error);
+        catchErrorConnection(error);
+
       });
   };
 
@@ -117,7 +120,7 @@ function Login() {
           }
         })
         .catch((error) => {
-          alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+          catchErrorConnection(error);
           console.log(error);
         });
     }
@@ -148,7 +151,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -194,7 +197,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -271,7 +274,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -303,7 +306,12 @@ function Login() {
             if (index !== -1) {
 
               const index2 = prevData[index].skill.findIndex(record => record.id === item.id);
+              let tasklist = [];
+              if (prevData[index].skill[index2].task != undefined) {
+                tasklist = prevData[index].skill[index2].task;
+              }
               prevData[index].skill[index2] = response.data.data;
+              prevData[index].skill[index2].task = tasklist;
 
               return prevData;
             } else {
@@ -320,7 +328,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -367,7 +375,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -442,7 +450,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -498,7 +506,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -546,7 +554,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -583,35 +591,38 @@ function Login() {
               const index3 = prevData[index].skill[index2].task.findIndex(record => record.id === item.id);
 
               const item_task = prevData[index].skill[index2].task[index3];
+              if (item_task != undefined) {
 
-              const jumlah = parseInt(item_skill.progress) + parseInt(item_task.score);
-
-              const selisih = (parseInt(item_skill.limit_progress) - jumlah) * -1;
-              let level_loncat = 0;
+                const jumlah = parseInt(item_skill.progress) + parseInt(item_task.score);
 
 
-              item_skill.progress = jumlah;
-              if (!(jumlah < parseInt(item_skill.limit_progress))) {
+                const selisih = (parseInt(item_skill.limit_progress) - jumlah) * -1;
+                let level_loncat = 0;
 
-                if (selisih >= parseInt(item_skill.limit_progress)) {
-                  const sisabagi = selisih % parseInt(item_skill.limit_progress);
 
-                  if (sisabagi == 0) {
-                    level_loncat = selisih / parseInt(item_skill.limit_progress);
+                item_skill.progress = jumlah;
+                if (!(jumlah < parseInt(item_skill.limit_progress))) {
 
-                    item_skill.level = parseInt(item_skill.level) + level_loncat + 1;
-                    item_skill.progress = 0;
+                  if (selisih >= parseInt(item_skill.limit_progress)) {
+                    const sisabagi = selisih % parseInt(item_skill.limit_progress);
+
+                    if (sisabagi == 0) {
+                      level_loncat = selisih / parseInt(item_skill.limit_progress);
+
+                      item_skill.level = parseInt(item_skill.level) + level_loncat + 1;
+                      item_skill.progress = 0;
+                    } else {
+                      const progress = selisih - sisabagi;
+                      level_loncat = progress / parseInt(item_skill.limit_progress);
+                      item_skill.level = parseInt(item_skill.level) + level_loncat + 1;
+                      item_skill.progress = sisabagi;
+                    }
+
+
                   } else {
-                    const progress = selisih - sisabagi;
-                    level_loncat = progress / parseInt(item_skill.limit_progress);
-                    item_skill.level = parseInt(item_skill.level) + level_loncat + 1;
-                    item_skill.progress = sisabagi;
+                    item_skill.level = parseInt(item_skill.level) + 1;
+                    item_skill.progress = selisih;
                   }
-
-
-                } else {
-                  item_skill.level = parseInt(item_skill.level) + 1;
-                  item_skill.progress = selisih;
                 }
               }
 
@@ -633,7 +644,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        alert("Mohon maaf terjadi kesalahan silahkan coba lagi ");
+        catchErrorConnection(error);
         console.log(error);
       });
   };
@@ -699,15 +710,15 @@ function Login() {
       <Navbar />
 
       <div className={`flex transition-all ease-in-out duration-500   ${showMenu ? "md:gap-11 lg:gap-2" : "md:gap-4 lg:gap-2"} `}>
-        <div className={`  transition-all ease-in-out duration-500 ${showMenu ? "w-0 md:w-1/5" : "w-0 md:w-16"}`} ></div>
-        <div className={` transition-all ease-in-out duration-500 grow  min-h-screen  max-h-screen border p-5 rounded-xl shadow-lg mx-2  ${showMenu ? " " : ""}`}>
+        <div className={`  transition-all ease-in-out duration-500  ${showMenu ? "w-0 md:w-1/5" : "w-0 md:w-16"}`} ></div>
+        <div className={` transition-all ease-in-out duration-500 grow   min-h-screen  max-h-screen border p-2 lg:p-5 rounded-xl shadow-lg mx-2 mt-2 lg:mt-0   ${showMenu ? " " : ""}`}>
 
           <div className="  flex items-center justify-end mb-2">
             <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded-full flex items-center " onClick={modalToggle}>
               <i className='bx bx-plus me-2'></i> New Section
             </button>
           </div>
-          <div className="overflow-scroll" style={{ height: '95%' }}>
+          <div className="overflow-scroll " style={{ height: isMobile ? '85%' : '95%' }}>
 
 
             {currentData && currentData.map((item, index) => (
@@ -725,7 +736,7 @@ function Login() {
                     </button>
                   </div>
                 </div>
-                <div className=" bg-gray-50 pb-2 rounded-xl grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2">
+                <div className=" bg-gray-50 pb-2 rounded-xl grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 ">
                   {item.skill && item.skill.map((item2, index2) => (
                     <div className="p-3 bg-white rounded-xl shadow-lg" key={index2}>
                       <div className="flex justify-between items-start">
@@ -775,7 +786,7 @@ function Login() {
 
                   ))}
                   <div>
-                    <div className="p-3 bg-white rounded-xl shadow-lg h-full hover:cursor-pointer  opacity-50 hover:opacity-100 transition-all ease-in-out duration-300 " onClick={() => addSkillRecord(item)}>
+                    <div className="p-3 bg-white rounded-xl shadow-lg h-full hover:cursor-pointer  opacity-100  transition-all ease-in-out duration-300 z-0" onClick={() => addSkillRecord(item)}>
                       <div className="flex items-center justify-center max-h-52 min-h-52">
                         <button className="bg-gray-700 hover:bg-black text-white font-bold py-2 px-4 rounded-full flex items-center justify-center " >
                           <i className='bx bx-plus me-2'></i> New Skill

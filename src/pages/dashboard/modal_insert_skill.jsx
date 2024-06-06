@@ -67,7 +67,7 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
                             {/* Modal panel, show/hide based on modal state.
 
         Entering: "ease-out duration-300"
@@ -97,7 +97,7 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                                 <div>
                                                     <label
                                                         htmlFor="first_name"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                        className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
                                                         Name
                                                     </label>
@@ -117,7 +117,7 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                                 <div>
                                                     <label
                                                         htmlFor="first_name"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                        className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
                                                         Level
                                                     </label>
@@ -137,7 +137,7 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                                 <div>
                                                     <label
                                                         htmlFor="first_name"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                        className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
                                                         Progress
                                                     </label>
@@ -157,7 +157,7 @@ function ModalInsertSkill({ showModal, modalToggle, insertData, initialData }) {
                                                 <div>
                                                     <label
                                                         htmlFor="first_name"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                        className="text-start block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
                                                         Limit Progress
                                                     </label>

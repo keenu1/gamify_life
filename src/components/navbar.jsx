@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { timeout, baseUrl, useNavigation, alertPopupError, catchErrorConnection } from "../assets/js/function";
+import TabLogo from "../assets/img/logo_tab.jpeg";
 
 import axios from "axios";
 
@@ -121,14 +122,14 @@ function Login() {
 
   return (
     <>
-      <aside className={`hidden md:block bg-white h-screen shadow-lg rounded-r-xl absolute top-0  transition-all duration-500 ease-in-out ${showMenu ? "w-1/5  " : "w-16"}`}>
+      <aside className={`hidden md:block bg-white h-screen shadow-lg rounded-r-xl fixed top-0  transition-all duration-500 ease-in-out ${showMenu ? "w-1/5  " : "w-16"}`}>
         <nav className="flex flex-col justify-between  items-center h-full">
           <div className={`flex flex-col  gap-4 p-4 w-full ${showMenu ? "items-start" : "items-center"}`}>
             <div className="flex justify-between  items-center w-full">
               <div className={`flex items-center   w-full font-semibold`}>
                 <div className="flex items-center gap-2 ">
                   <img
-                    src="/src/assets/img/logo_tab.jpeg"
+                    src={TabLogo}
                     alt=""
                     className={`rounded-full w-7 flex-none ${showMenu ? 'w-7' : 'w-7'}`}
 
@@ -199,6 +200,21 @@ function Login() {
                   }}
                 > News</span>
               </Link>
+              <Link
+                to="/feedback"
+                className={`group ${isActive("/feedback") ? "bg-gray-100 text-black font-medium" : "text-gray-500 hover:font-medium hover:text-black"
+                  } flex items-center rounded-lg px-3 py-2`}
+              >
+                <i className='bx bxs-star-half'></i>
+                <span className={`ms-6 flex-none absolute transition-all duration-200 ${showMenu ? "opacity-100 transform translate-x-0 delay-1000" : "opacity-0 translate-x-[-20px]"} group-hover:delay-0`}
+                  onMouseLeave={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transitionDelay = '0s';
+                  }}
+                > Feedback</span>
+              </Link>
             </div>
 
           </div>
@@ -217,7 +233,7 @@ function Login() {
                   onClick={dropdownProfileToggle}
 
                 >
-                  <span className={`ms-2 `} id="profil-name">
+                  <span className={`ms-2 text-start`} id="profil-name">
                     {nama}
 
                   </span>
@@ -271,12 +287,12 @@ function Login() {
 
       </aside>
 
-      <aside className={`border block md:hidden bg-white w-screen shadow-lg rounded-t-xl absolute bottom-0  transition-all duration-500 ease-in-out ${showMenu ? "w-1/5  " : "w-16"}`}>
+      <aside className={`border block md:hidden bg-white w-screen shadow-lg rounded-t-xl fixed bottom-0 transition-all duration-500 ease-in-out ${showMenu ? "w-1/5" : "w-16"}`}>
         <nav className="flex relative flex-row justify-between  items-center h-full">
           <div className={`flex flex-row items-start p-4  `}>
             <div className="flex">
               <img
-                src="/src/assets/img/logo_tab.jpeg"
+                src={TabLogo}
                 alt=""
                 className={`rounded-full w-7 flex-none ${showMenu ? 'w-7' : 'w-7'}`}
 
@@ -329,6 +345,18 @@ function Login() {
               </span>
 
             </Link>
+            <Link
+              to="/feedback"
+              className={`${isActive("/feedback") ? "bg-gray-100 text-black font-medium" : "text-gray-500 hover:font-medium hover:text-black"
+                } flex items-center rounded-lg px-3 py-2`}
+            >
+              <i className='bx bxs-star-half'></i>
+              <span className={`ms-6 flex-none absolute   transition-all  ${showMenu ? "opacity-100 transform translate-x-0 duration-200 delay-700" : "opacity-0 translate-x-[-20px] duration-0 "}`}>
+                {/* News */}
+              </span>
+
+            </Link>
+
           </div>
           <div className="p-3 ">
             <div className=" flex  justify-end items-center gap-2">
